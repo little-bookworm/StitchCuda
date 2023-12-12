@@ -1,0 +1,11 @@
+img_params:
+  raw_img:
+    num: 4
+    w: 1280
+    h: 720
+  stitch_img:
+    w: 800
+    h: 800
+table_path: /hostdata/projects/parking_perception/modules/StitchCuda/table/stitch_table_sgm.binary
+use_lum_banlance: false
+use_bicubic: true
