@@ -2,7 +2,7 @@
  * @Author: zjj
  * @Date: 2023-12-12 09:33:43
  * @LastEditors: zjj
- * @LastEditTime: 2023-12-12 12:05:08
+ * @LastEditTime: 2023-12-12 17:52:29
  * @FilePath: /StitchCuda/include/stitch_cuda.cuh
  * @Description:
  *
@@ -58,19 +58,18 @@ namespace ParkingPerception
             ~ImgStitch();
             int init();
             int stitch(const std::vector<cv::Mat> &images, const std::vector<cv::Mat> &float_images);
+            void get_result(cv::Mat &out);
 
         private:
             int load_config(std::string &config_path);
             int awb_and_lum_banlance(const std::vector<cv::Mat> &float_images);
             void destroy();
 
-        public:
-            cv::Mat output_; //拼接图
-
         private:
             // cuda
             cudaStream_t stream;
             //拼接图
+            cv::Mat output_;                       //拼接图
             int w_ = 0;                            //拼接图尺寸
             int h_ = 0;                            //拼接图尺寸
             unsigned char *output_view_ = nullptr; //拼接图cuda地址

@@ -51,7 +51,8 @@ int main()
   }
 
   //结果
-  cv::Mat output = img_stitch->output_.clone();
+  cv::Mat output;
+  img_stitch->get_result(output);
   std::string save_path = "/hostdata/projects/parking_perception/modules/StitchCuda/test/output.png";
   cv::imwrite(save_path, output);
   std::cout << "Save output img: " << save_path << std::endl;

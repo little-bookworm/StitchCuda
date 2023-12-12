@@ -386,6 +386,11 @@ namespace ParkingPerception
             return 0;
         }
 
+        void ImgStitch::get_result(cv::Mat &out)
+        {
+            out=output_.clone();
+        }
+
         int ImgStitch::load_config(std::string &config_path)
         {
             //导入yaml文件
