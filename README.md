@@ -23,4 +23,4 @@ bash run_test.sh
 |index|repo|info|
 |----|----|----|
 |1|[surround-view-system-introduction]<https://github.com/neozhaoliang/surround-view-system-introduction>|python verison|
-|3|[360-Surround-View-CUDA-Project]<https://github.com/zhangyeyan/360-Surround-View-CUDA-Project>|c++ verison|
+|2|[360-Surround-View-CUDA-Project]<https://github.com/zhangyeyan/360-Surround-View-CUDA-Project>|c++ verison|
