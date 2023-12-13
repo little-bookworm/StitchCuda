@@ -2,11 +2,11 @@
 
 namespace ParkingPerception
 {
-namespace StitchCuda
-{
-    ImgStitch *CreateStitch(std::string config_file)
+    namespace StitchCuda
     {
-        return new ImgStitch(config_file);
-    }
-} // namespace StitchCuda
+        std::shared_ptr<ImgStitch> CreateStitch(std::string config_file)
+        {
+            return std::make_shared<ImgStitch>(config_file);
+        }
+    } // namespace StitchCuda
 } // namespace ParkingPerception
