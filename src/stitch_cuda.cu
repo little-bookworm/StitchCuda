@@ -388,14 +388,18 @@ namespace ParkingPerception
 
         void ImgStitch::get_result(cv::Mat &out)
         {
-            out=output_.clone();
+            out = output_.clone();
         }
 
         int ImgStitch::load_config(std::string &config_path)
         {
             //导入yaml文件
-            YAML::Node config = YAML::LoadFile(config_path);
-            if (!config)
+            YAML::Node config;
+            try
+            {
+                config = YAML::LoadFile(config_path);
+            }
+            catch (const std::exception &e)
             {
                 std::cout << "[ImgStitch]->[load_config] No config file: " << config_path << std::endl;
                 return -1;
