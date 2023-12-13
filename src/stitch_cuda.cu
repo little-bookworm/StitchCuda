@@ -234,14 +234,8 @@ namespace ParkingPerception
             }
         }
 
-        ImgStitch::ImgStitch(std::string config_path)
+        ImgStitch::ImgStitch(std::string config_path):config_path_(config_path)
         {
-            if (0 != load_config(config_path))
-            {
-                std::cout << "[ImgStitch]->[constructor] Failed to load config file." << std::endl;
-                return;
-            }
-            std::cout << "[ImgStitch]->[constructor] Loading config file success." << std::endl;
         }
 
         ImgStitch::~ImgStitch()
@@ -251,6 +245,13 @@ namespace ParkingPerception
 
         int ImgStitch::init()
         {
+            //读取配置
+            if (0 != load_config())
+            {
+                std::cout << "[ImgStitch]->[init] Failed to load config file." << std::endl;
+                return -1;
+            }
+
             //打开并判断映射表可用性
             FILE *f = fopen(table_path_.c_str(), "rb");
             if (f == nullptr)
@@ -391,17 +392,17 @@ namespace ParkingPerception
             out = output_.clone();
         }
 
-        int ImgStitch::load_config(std::string &config_path)
+        int ImgStitch::load_config()
         {
             //导入yaml文件
             YAML::Node config;
             try
             {
-                config = YAML::LoadFile(config_path);
+                config = YAML::LoadFile(config_path_);
             }
             catch (const std::exception &e)
             {
-                std::cout << "[ImgStitch]->[load_config] No config file: " << config_path << std::endl;
+                std::cout << "[ImgStitch]->[load_config] No config file: " << config_path_ << std::endl;
                 return -1;
             }
 

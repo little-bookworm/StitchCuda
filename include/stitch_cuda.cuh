@@ -2,7 +2,7 @@
  * @Author: zjj
  * @Date: 2023-12-12 09:33:43
  * @LastEditors: zjj
- * @LastEditTime: 2023-12-12 17:52:29
+ * @LastEditTime: 2023-12-13 13:41:20
  * @FilePath: /StitchCuda/include/stitch_cuda.cuh
  * @Description:
  *
@@ -61,11 +61,13 @@ namespace ParkingPerception
             void get_result(cv::Mat &out);
 
         private:
-            int load_config(std::string &config_path);
+            int load_config();
             int awb_and_lum_banlance(const std::vector<cv::Mat> &float_images);
             void destroy();
 
         private:
+            //配置文件
+            std::string config_path_;
             // cuda
             cudaStream_t stream;
             //拼接图
