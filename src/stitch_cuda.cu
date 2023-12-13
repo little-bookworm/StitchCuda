@@ -336,7 +336,7 @@ namespace ParkingPerception
             return 0;
         }
 
-        int ImgStitch::stitch(const std::vector<cv::Mat> &images, const std::vector<cv::Mat> &float_images)
+        int ImgStitch::stitch(const std::vector<cv::Mat> &images)
         {
             //判断原图数量
             if (images.size() != numcam_)
@@ -363,6 +363,21 @@ namespace ParkingPerception
             //白平衡
             if (use_lum_banlance)
             {
+                // float类型图片
+                cv::Mat img_front_float;                                    // float类型图片
+                images[0].clone().convertTo(img_front_float, CV_32F, 1, 0); // 1、0分别是比例因子，y = a*x + b
+                cv::Mat img_left_float;                                     // float类型图片
+                images[1].clone().convertTo(img_left_float, CV_32F, 1, 0);  // 1、0分别是比例因子，y = a*x + b
+                cv::Mat img_back_float;                                     // float类型图片
+                images[2].clone().convertTo(img_back_float, CV_32F, 1, 0);  // 1、0分别是比例因子，y = a*x + b
+                cv::Mat img_right_float;                                    // float类型图片
+                images[3].clone().convertTo(img_right_float, CV_32F, 1, 0); // 1、0分别是比例因子，y = a*x + b
+                std::vector<cv::Mat> float_images;
+                float_images.emplace_back(img_front_float);
+                float_images.emplace_back(img_left_float);
+                float_images.emplace_back(img_back_float);
+                float_images.emplace_back(img_right_float);
+
                 if (0 != awb_and_lum_banlance(float_images))
                 {
                     std::cout << "[ImgStitch]->[stitch] Failed to awb_and_lum_banlance!!!" << std::endl;

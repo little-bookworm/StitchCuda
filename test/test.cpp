@@ -30,22 +30,9 @@ int main()
   raw_images.emplace_back(img_left);
   raw_images.emplace_back(img_back);
   raw_images.emplace_back(img_right);
-  std::vector<cv::Mat> float_images;
-  cv::Mat img_front_float;                                     // float类型图片
-  img_front.clone().convertTo(img_front_float, CV_32F, 1, 0);  // 1、0分别是比例因子，y = a*x + b
-  cv::Mat img_left_float;                                      // float类型图片
-  img_left.clone().convertTo(img_left_float, CV_32F, 1, 0);    // 1、0分别是比例因子，y = a*x + b
-  cv::Mat img_back_float;                                      // float类型图片
-  img_back.clone().convertTo(img_back_float, CV_32F, 1, 0);    // 1、0分别是比例因子，y = a*x + b
-  cv::Mat img_right_float;                                     // float类型图片
-  img_right.clone().convertTo(img_right_float, CV_32F, 1, 0);  // 1、0分别是比例因子，y = a*x + b
-  float_images.emplace_back(img_front_float);
-  float_images.emplace_back(img_left_float);
-  float_images.emplace_back(img_back_float);
-  float_images.emplace_back(img_right_float);
 
   //拼接
-  if (0 != img_stitch->stitch(raw_images, float_images))
+  if (0 != img_stitch->stitch(raw_images))
   {
     return 0;
   }

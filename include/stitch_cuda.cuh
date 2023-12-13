@@ -2,7 +2,7 @@
  * @Author: zjj
  * @Date: 2023-12-12 09:33:43
  * @LastEditors: zjj
- * @LastEditTime: 2023-12-13 14:47:48
+ * @LastEditTime: 2023-12-13 17:36:40
  * @FilePath: /StitchCuda/include/stitch_cuda.cuh
  * @Description:
  *
@@ -57,7 +57,7 @@ namespace ParkingPerception
             ImgStitch(std::string config_path);
             ~ImgStitch();
             int init();
-            int stitch(const std::vector<cv::Mat> &images, const std::vector<cv::Mat> &float_images);
+            int stitch(const std::vector<cv::Mat> &images);
             void get_result(cv::Mat &out);
 
         private:
