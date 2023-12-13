@@ -2,7 +2,7 @@
  * @Author: zjj
  * @Date: 2023-12-12 09:33:43
  * @LastEditors: zjj
- * @LastEditTime: 2023-12-13 13:41:20
+ * @LastEditTime: 2023-12-13 14:47:48
  * @FilePath: /StitchCuda/include/stitch_cuda.cuh
  * @Description:
  *
@@ -69,7 +69,7 @@ namespace ParkingPerception
             //配置文件
             std::string config_path_;
             // cuda
-            cudaStream_t stream;
+            cudaStream_t stream = nullptr;
             //拼接图
             cv::Mat output_;                       //拼接图
             int w_ = 0;                            //拼接图尺寸
@@ -88,15 +88,15 @@ namespace ParkingPerception
             int N;                                     //单张图像像素数量
             int sumblock_x;                            //每个线程块的线程数
             int sumgrid_x;                             //分配的cuda block数量
-            float3 *blocksum_cuda;                     // cuda block上存储的累加值
-            float3 *blocksum_host;                     // cpu上的block累加值
+            float3 *blocksum_cuda = nullptr;           // cuda block上存储的累加值
+            float3 *blocksum_host = nullptr;           // cpu上的block累加值
             std::vector<float *> images_float_device_; //存储float类型mat的vector
-            float3 *bgr_gain_host;                     // cpu上存储的bgr缩放系数
-            float3 *bgr_gain_device;                   // gpu上存储的bgr缩放系数
+            float3 *bgr_gain_host = nullptr;           // cpu上存储的bgr缩放系数
+            float3 *bgr_gain_device = nullptr;         // gpu上存储的bgr缩放系数
             //双立方插值
-            bool use_bicubic = false; //是否使用双立方插值
-            float4 *rowImFac_device;  // gpu上存储的行影响因子
-            float4 *colImFac_device;  // gpu上存储的列影响因子
+            bool use_bicubic = false;          //是否使用双立方插值
+            float4 *rowImFac_device = nullptr; // gpu上存储的行影响因子
+            float4 *colImFac_device = nullptr; // gpu上存储的列影响因子
         };
 
     }

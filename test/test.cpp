@@ -8,7 +8,7 @@ int main()
 {
   //构造实例
   std::string config_path = "/hostdata/projects/parking_perception/modules/StitchCuda/config/StitchCuda.yaml";
-  ImgStitch* img_stitch = CreateStitch(config_path);
+  std::shared_ptr<ImgStitch> img_stitch = CreateStitch(config_path);
 
   //初始化
   if (0 != img_stitch->init())

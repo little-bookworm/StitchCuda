@@ -234,7 +234,7 @@ namespace ParkingPerception
             }
         }
 
-        ImgStitch::ImgStitch(std::string config_path):config_path_(config_path)
+        ImgStitch::ImgStitch(std::string config_path) : config_path_(config_path)
         {
         }
 
@@ -493,11 +493,18 @@ namespace ParkingPerception
 
         void ImgStitch::destroy()
         {
-            checkRuntime(cudaStreamDestroy(stream));
+            if (stream)
+            {
+                checkRuntime(cudaStreamDestroy(stream));
+                stream = nullptr;
+            }
 
             for (int i = 0; i < images_device_.size(); ++i)
             {
-                checkRuntime(cudaFree(images_device_[i]));
+                if (images_device_[i])
+                {
+                    checkRuntime(cudaFree(images_device_[i]));
+                }
             }
             images_device_.clear();
 
@@ -515,8 +522,11 @@ namespace ParkingPerception
 
             if (use_lum_banlance)
             {
-                delete[] blocksum_host;
-                blocksum_host = nullptr;
+                if (blocksum_host)
+                {
+                    delete[] blocksum_host;
+                    blocksum_host = nullptr;
+                }
 
                 if (blocksum_cuda)
                 {
@@ -526,12 +536,19 @@ namespace ParkingPerception
 
                 for (int i = 0; i < images_float_device_.size(); ++i)
                 {
-                    checkRuntime(cudaFree(images_float_device_[i]));
+                    if (images_float_device_[i])
+                    {
+                        checkRuntime(cudaFree(images_float_device_[i]));
+                    }
                 }
+                images_float_device_.clear();
             }
 
-            delete[] bgr_gain_host;
-            bgr_gain_host = nullptr;
+            if (bgr_gain_host)
+            {
+                delete[] bgr_gain_host;
+                bgr_gain_host = nullptr;
+            }
 
             if (bgr_gain_device)
             {
@@ -541,8 +558,16 @@ namespace ParkingPerception
 
             if (use_bicubic)
             {
-                checkRuntime(cudaFree(rowImFac_device));
-                checkRuntime(cudaFree(colImFac_device));
+                if (rowImFac_device)
+                {
+                    checkRuntime(cudaFree(rowImFac_device));
+                    rowImFac_device = nullptr;
+                }
+                if (colImFac_device)
+                {
+                    checkRuntime(cudaFree(colImFac_device));
+                    colImFac_device = nullptr;
+                }
             }
         }
     }
