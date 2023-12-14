@@ -271,6 +271,12 @@ namespace ParkingPerception
                 return -1;
             }
 
+            // 设置device
+            checkRuntime(cudaSetDevice(0));
+
+            // 设置stream;
+            checkRuntime(cudaStreamCreate(&stream));
+
             //读取映射表数据
             unsigned char *table_host = new unsigned char[size];
             fread(table_host, 1, size, f);
@@ -280,6 +286,7 @@ namespace ParkingPerception
             output_.create(h_, w_, CV_8UC3);
 
             //原图cuda分配内存
+            images_device_.clear();
             for (int i = 0; i < numcam_; ++i)
             {
                 unsigned char *device_ptr = nullptr;
@@ -305,7 +312,8 @@ namespace ParkingPerception
                 sumgrid_x = (N % sumblock_x) ? (N / sumblock_x + 1) : (N / sumblock_x); //分配的cuda block数量
                 blocksum_host = new float3[sumgrid_x];                                  // cpu上分配线程块数量的内存
                 checkRuntime(cudaMalloc(&blocksum_cuda, sizeof(float3) * sumgrid_x));   // gpu上分配线程块数量的内存
-                for (int i = 0; i < numcam_; ++i)                                       // gpu分配float图像内存
+                images_float_device_.clear();
+                for (int i = 0; i < numcam_; ++i) // gpu分配float图像内存
                 {
                     float *device_float_ptr = nullptr;
                     checkRuntime(cudaMalloc(&device_float_ptr, camw_ * camh_ * sizeof(float3)));
@@ -327,9 +335,6 @@ namespace ParkingPerception
                 checkRuntime(cudaMalloc(&rowImFac_device, sizeof(float4) * w_ * h_)); //双立方插值影响因子
                 checkRuntime(cudaMalloc(&colImFac_device, sizeof(float4) * w_ * h_)); //双立方插值影响因子
             }
-
-            // 设置stream;
-            checkRuntime(cudaStreamCreate(&stream));
 
             std::cout << "[ImgStitch]->[init] Init success." << std::endl;
 
